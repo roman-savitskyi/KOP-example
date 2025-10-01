@@ -1,4 +1,5 @@
 
+import { v4 as uuidv4 } from 'uuid';
 import "./customList.css";
 
 function CustomList({ items }) {
@@ -8,8 +9,8 @@ function CustomList({ items }) {
     }
     return (
         <ul className="custom-list">
-            {items.map((item, index) => (
-                <li key={index} className="custom-list-item">
+            {items.map((item) => (
+                <li key={uuidv4()} className="custom-list-item">
                     <span className="custom-list-item-text">{item}</span>
                 </li>
             ))}
