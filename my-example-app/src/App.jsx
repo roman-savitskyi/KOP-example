@@ -2,9 +2,15 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { CustomInput, CustomButton } from './components'
+import { Students } from './modules';
 
 function App() {
   const [count, setCount] = useState(0)
+  const [courseName, setCourseName] = useState('JS/TS')
+  
+  const changeName = (e) => setCourseName(e.target.value);
+  const defaultStudents = ['Ivanov', 'Petrenko', 'Sidorov'];
 
   return (
     <>
@@ -16,18 +22,18 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>{courseName}</h1>
+
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <CustomButton onClick={() => setCount((count) => count + 1)}>
           count is {count}
-        </button>
+        </CustomButton>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          Clicks: <span>{count}</span> <br />
         </p>
+        <CustomInput value={courseName} onChange={changeName} />
+        <Students defaultStudents={defaultStudents} />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
