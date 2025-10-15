@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { CustomList, CustomInput } from "../../components";
+import { useState, useEffect } from "react";
+import { CustomList, CustomInput } from "../../components"; 
 import "./students.css";
 
-function Students({ defaultStudents }) {
+function Students({setUser}) {
     const [studentName, setStudentName] = useState('')
-    const [students, setStudents] = useState(defaultStudents || []);
+    let [students, setStudents] = useState([]);
+
 
     const changeStudentName = (e) => setStudentName(e.target.value);
     const changeStudents = (e) => {
@@ -12,6 +13,26 @@ function Students({ defaultStudents }) {
         setStudents([...students, e.target.value])
         setStudentName('')
     }
+
+    // Mocked data for default students
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Fetched users:', data);
+            setStudents(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, []);   
+
+    const onClick = (e) => {
+        const id = e.currentTarget.getAttribute('data-key');
+        const student = students.find(s => s.id == id);
+        console.log('Student:', student);
+
+        setUser(student);
+    }
+
 
     return (
         <div className="students-container">
@@ -25,7 +46,7 @@ function Students({ defaultStudents }) {
                     placeholder="Enter student name..."
                 />
             </div>
-            <CustomList items={students} />
+            <CustomList items={students} onClick={onClick} />
         </div>
     );
 }
